@@ -1,0 +1,118 @@
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --darkblue: #0e1e67;
+    --purple: #771383;
+    --darkpurple: #4e0756;
+    --ligthblue: #4860cd;
+  
+  }
+
+header {
+    width: 100%;
+    display: inline-block;
+    background-image: linear-gradient(to right, var(--darkblue), var(--purple));
+    color: white;
+    height: 80px;
+    padding-top: 40px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+body {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+
+#main-content {
+  display: inline-flex;
+  flex-direction: row;
+}
+
+aside {
+    display: block;
+    flex-direction: column;
+    width: 25%;
+    padding: 15px;
+}
+
+hr {
+  border-top: 2px dashed var(--purple);
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+main {
+  display: block;
+  flex-direction: column;
+  width: 75%;
+  border-left: 2px solid var(--purple);
+  margin-left: 2%;
+  padding: 15px;
+  height: 80vh;
+}
+
+h1 {
+  font-size: 40px ;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+
+}
+
+h2 {
+ font-size: 36px ;
+ font-family: Poppins;
+ font-weight: 500;
+ line-height: 2em;
+}
+
+h3 {
+  font-size: 30px ;
+  font-family: Poppins;
+ font-weight: 500;
+ line-height: 2em;
+ 
+ }
+ p {
+  font-size: 18px;
+  line-height: 1.8em;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+ } 
+
+#search-box {
+    width: 100%;
+    height: 40px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    border: solid 2px var(--darkpurple);
+    padding: 2%;
+    font-size: 1.3em;
+}
+
+#search-btn {
+    width: 100%;
+    height: 35px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: var(--ligthblue);
+    color: white;
+    padding: 1%;
+    margin: 0;
+    align-items: center;
+}
+  
+#day-forecast {
+    background: transparent;
+    border: none;
+    resize: none;
+    color: #000000;
+    padding: 10px;
+    width: 90%;
+    border: 2px solid var(--darkblue);
+  }
