@@ -53,8 +53,11 @@ var weather = {
   .addEventListener("click", function() {
   weather.search();
 });
-// document.querySelector("#search-box").addEventListener("keyup", function(event)) {
-// }
+document.querySelector("#search-box").addEventListener("keyup", function(event) {
+  if(event.key == "Enter") { 
+    weather.search();
+  }
+});
       
       // function(data) {
       //   console.log(data);
