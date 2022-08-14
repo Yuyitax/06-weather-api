@@ -9,7 +9,6 @@
     --purple: #771383;
     --darkpurple: #4e0756;
     --ligthblue: #4860cd;
-  
   }
 
 header {
@@ -76,9 +75,9 @@ h3 {
   font-size: 30px ;
   font-family: Poppins;
  font-weight: 500;
- line-height: 2em;
- 
+ line-height: 1.6em;
  }
+
  p {
   font-size: 18px;
   line-height: 1.8em;

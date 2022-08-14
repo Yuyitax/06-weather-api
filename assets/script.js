@@ -15,7 +15,6 @@ var weekForecast = $('#week-forecast');
 var historyList = $('#search-history');
 
 
-
 // This is reading the input value and calls the API
 var weather = {
   fetchWeather: function(city) {
