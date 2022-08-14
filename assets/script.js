@@ -52,17 +52,12 @@ var weather = {
   .addEventListener("click", function() {
   weather.search();
 });
+
 document.querySelector("#search-box").addEventListener("keyup", function(event) {
   if(event.key == "Enter") { 
     weather.search();
   }
 });
-      
-      // function(data) {
-      //   console.log(data);
-      //   var showIcon = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
-      
-      //     $('.icon').attr("src", showIcon);
 
 
 
