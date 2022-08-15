@@ -3,16 +3,21 @@ var weatherUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=
 var APIKey = "e2f2ae4e3190eced8e68a78474ffc272";
 var fullUrl =  weatherUrl + APIKey;
 var searchHistory = [];
-// var city = $("#search-box").val();
 var returnedWeather = [];
 
-//Full URL: https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&units=imperial&appid=e2f2ae4e3190eced8e68a78474ffc272
+// Curl calls:
+//Full URL for working UVI: https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&units=imperial&appid=e2f2ae4e3190eced8e68a78474ffc272
+//Full URL for all info except UVI:  https://api.openweathermap.org/data/2.5/weather?q=Atlanta&units=imperial&appid=e2f2ae4e3190eced8e68a78474ffc272
+// Daily url-- not working: https://pro.openweathermap.org/data/2.5/forecast/climate?lat=35&lon=139&appid=e2f2ae4e3190eced8e68a78474ffc272
 
 // DOM elements 
 var searchBar = $('#search-box');
 var singleForecast = $('#day-forecast');
 var weekForecast = $('#week-forecast');
 var historyList = $('#search-history');
+var timeEl = $('#time');
+var dateEl = $('#date');
+
 
 
 // This is reading the input value and calls the API
@@ -28,6 +33,24 @@ var weather = {
     .then((data) => this.displayWeather(data));
 
   },
+
+  fetchUVI: function(data) {
+    fetch("https://api.openweathermap.org/data/2.5/onecall?lat="
+      + data.coord.lat
+      + "&lon=" 
+      + data.coord.lon
+      + "&units=imperial&appid="
+      + this.APIKey
+    )
+    .then((response) => response.json())
+    .then((data) => {
+      this.weekForecast(data)
+      this.displayUVI(data)
+      console.log(fetchUVI)
+    });
+  },
+
+
   displayWeather: function(data) {
     const {name} = data;
     const{icon, description} = data.weather[0];
@@ -36,18 +59,39 @@ var weather = {
     const {uvi} = data.main;
     // console.log(name, icon, description, temp, humidity, speed, uvi);
     document.querySelector(".city").innerText = "Weather in " + name;
+    document.querySelector(".description").innerText = description;
     document.querySelector(".icon").src = "https://openweathermap.org/img/w/" + icon + ".png";
     document.querySelector(".temp").innerText = "Temperature: " + temp + "ºF";
     document.querySelector(".humidity").innerText = "Humidity: " + humidity + "%";
-    document.querySelector(".wind").innerText = "Wind Speed: " + speed + "MPH";
-    document.querySelector(".uvi").innerText = "UV Index: " + uvi;
+    document.querySelector(".wind").innerText = "Wind Speed: " + speed + "mph";
+    console.log(data)
   },
+
   search: function() {
     this.fetchWeather(document.querySelector('#search-box').value)
+  },
+
+  displayUVI: function (data) {
+    var { uvi } = data.daily[0];
+    document.getElementById("uvi").innerText = "UV Index: " + uvi;
+  },
+
+  weekForecast: function (data) {
+    const{icon} = data.daily[i].weather[0].icon;
+    const{description} = data.daily[i].weather[0].description;
+    const {humidity} = data.daily[i].humidity;
+    const {speed} = data.daily[i].wind_speed;
+    document.querySelector(".description-forecast").innerText = description;
+    document.querySelector(".icon-forecast").src = "https://openweathermap.org/img/w/" + icon + ".png";
+    document.querySelector(".temp-forecast").innerText = "Temperature: " + temp + "ºF";
+    document.querySelector(".humidity-forecast").innerText = "Humidity: " + humidity + "%";
+    document.querySelector(".wind-forecast").innerText = "Wind Speed: " + speed + "mph";
   }
 };
 
-  //Get city by typying on search box:
+
+
+  // Retrieving city by typying on search box:
   document.querySelector("#search-btn")
   .addEventListener("click", function() {
   weather.search();
@@ -62,44 +106,6 @@ document.querySelector("#search-box").addEventListener("keyup", function(event) 
 
 
 
-// $("#search-btn").on("click", function(data) {
-//     // console.log($("#search-box").val());
-//     var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + $("#search-box").val() + "&appid=" + APIKey;
-//     fetch(queryURL)
-//     .then((response) => response.json())
-//     .then(data => returnedWeather = data)
-//     .then((data) => console.log(data));
-
-
-//       var showIcon = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
-//     console.log(showIcon)
-//     $('.icon').attr('src', showIcon);
-
-// });
-
-
-
-
-  // $("#search-btn").on("click", function(data) {
-  //   // console.log($("#search-box").val());
-  //   var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + $("#search-box").val() + "&appid=" + APIKey;
-  //   fetch(queryURL)
-  //   .then((response) => response.json())
-  //   .then(data => returnedWeather = data)
-  //   .then((data) => console.log(data));
-
-  //   var showIcon = "https://openweathermap.org/img/w/0" + data.weather[0].icon + ".png";
-  //   $('.icon').attr('src', showIcon);
-
-  // });
-
-
-
-
-
-
-
-
 
 
 // Time zone plugin
@@ -107,29 +113,50 @@ dayjs.extend(window.dayjs_plugin_utc);
 
 dayjs.extend(window.dayjs_plugin_timezone);
 
+//Current Time and Date
+// var currentTime = function () {
+//   document.getElementById('currentTime').innerText = moment().format(
+//     "dddd, MMM Do, h:mm:ss a"
+//   );
+// };
+// setInterval(currentTime, 1000);
 
 
-// // Display search history function
-// function displaySearchList() {
-//     historyList.innerHTML = "";
-//     for (var i = searchHistory.length -1; i >= 0; i--) {
-//         var btn = document.createElement('button');
-//         btn.setAttribute('type', 'button');
-//         btn.setAttribute('aria-controls', 'Todays Forecast');
-//         btn.classList.add('history-btn', 'btn-history');
-//         btn.setAttribute('data-search', searchHistory[i]);
-//         btn.textContent = searchHistory[i];
-//         historyList.append(btn);
-//     }
-// }
 
-// 
+// Saving to localStorage
+const storageSearch = document.querySelector('#search-box');
+const saveBtn = document.querySelector('#search-btn');
+const btnHistory = document.querySelector('.btn-history');
+
+storageSearch.addEventListener('input', text => {
+  btnHistory.innerText = text.target.value
+})
+
+const saveToStorage = () => {
+  localStorage.setItem('city', btnHistory.innerText)
+}
+
+saveBtn.addEventListener('click', saveToStorage)
+storageSearch.addEventListener('event.key == "Enter"', saveToStorage)
+
+
+// Display search history function
+function displaySearchList() {
+    historyList.innerHTML = "";
+    for (var i = searchHistory.length -1; i >= 0; i--) {
+        var btn = document.createElement('button');
+        btn.setAttribute('type', 'button');
+        btn.setAttribute('aria-controls', 'Todays Forecast');
+        btn.classList.add('history-btn', 'btn-history');
+        btn.setAttribute('data-search', searchHistory[i]);
+        btn.textContent = searchHistory[i];
+        historyList.append(btn);
+    }
+}
+
 
 // Function to update search history in local storage -- call on displaySearchList()
 
-// Function to display the current weather data
-
-// Function to display the current weather data fetched from OpenWeather api.
 
 // function renderCurrentWeather(city, weather, timezone) {
 //     var date = dayjs().tz(timezone).format('M/D/YYYY');
@@ -193,5 +220,3 @@ dayjs.extend(window.dayjs_plugin_timezone);
 
 
 // Function display forecast card -- append cards to section
-
-/* Function to display forecast card above function x5*/

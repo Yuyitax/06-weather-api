@@ -16,27 +16,65 @@
     </header>
     <div id="main-content">
         <aside>
-            <section>
+            <section id="search-area">
             <h3>Search for a City:</h3>
             <input id="search-box" type="search" placeholder="i.e. Atlanta">
             <button id="search-btn">Search</button>
-            <hr>
         </section>
         <section id="search-history">
+            <button class="btn-history">Atlanta</button>
         </section>
         </aside>
         
         <main>
             <section id="day-forecast">
                 <h2 class="city">Weather in Atlanta</h2> 
-                <img src="" class="icon">
+                <p id="date" class="date"></p>
+                <p id="time" class="time"></p>
+                <p class="description"></p>&nbsp;<img src="" class="icon">
                 <p class="temp">Temperature: </p>
                 <p class="wind">Wind Speed: </p>
                 <p class="humidity">Humidity: </p>
                 <p class="uvi">UV Index: </p>
 
             </section>
-            <section id="week-forecast">
+            <div><h2>5-Day Forecast:</h2></div>
+            <section id="week-forecast">      
+                <div class="daily-card">
+                <p class="description-forecast"></p>&nbsp;<img src="" class="icon">
+                <p class="temp-forecast">Temperature: </p>
+                <p class="wind-forecast">Wind Speed: </p>
+                <p class="humidity-forecast">Humidity: </p>
+                <p class="uvi-forecast">UV Index: </p>
+                </div>
+                <div class="daily-card">
+                    <p class="description-forecast"></p>&nbsp;<img src="" class="icon">
+                    <p class="temp-forecast">Temperature: </p>
+                    <p class="wind-forecast">Wind Speed: </p>
+                    <p class="humidity-forecast">Humidity: </p>
+                    <p class="uvi-forecast">UV Index: </p>
+                    </div>
+                    <div class="daily-card">
+                        <p class="description-forecast"></p>&nbsp;<img src="" class="icon">
+                        <p class="temp-forecast">Temperature: </p>
+                        <p class="wind-forecast">Wind Speed: </p>
+                        <p class="humidity-forecast">Humidity: </p>
+                        <p class="uvi-forecast">UV Index: </p>
+                        </div>
+                        <div class="daily-card">
+                            <p class="description-forecast"></p>&nbsp;<img src="" class="icon">
+                            <p class="temp-forecast">Temperature: </p>
+                            <p class="wind-forecast">Wind Speed: </p>
+                            <p class="humidity-forecast">Humidity: </p>
+                            <p class="uvi-forecast">UV Index: </p>
+                            </div>
+                            <div class="daily-card">
+                                <p class="description-forecast"></p>&nbsp;<img src="" class="icon">
+                                <p class="temp-forecast">Temperature: </p>
+                                <p class="wind-forecast">Wind Speed: </p>
+                                <p class="humidity-forecast">Humidity: </p>
+                                <p class="uvi-forecast">UV Index: </p>
+                                </div>
 
             </section>
         </main>
