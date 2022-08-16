@@ -53,17 +53,20 @@ var weather = {
        // Setting UV coloring
        console.log(uvi)
         if (uvi <= 3.9) { 
+          $("#uviBadge").removeClass();
           $("#uviBadge").addClass('uvi-good');
-          $("#uviBadge").removeClass('uvi-medium');
-          $("#uviBadge").removeClass('uvi-bad');
+          // $("#uviBadge").removeClass('uvi-medium');
+          // $("#uviBadge").removeClass('uvi-bad');
         } else if (uvi > 7) {
+          $("#uviBadge").removeClass();
           $("#uviBadge").addClass('uvi-bad');
-          $("#uviBadge").removeClass('uvi-good');
-          $("#uviBadge").removeClass('uvi-medium');
+          // $("#uviBadge").removeClass('uvi-good');
+          // $("#uviBadge").removeClass('uvi-medium');
         } else {
+          $("#uviBadge").removeClass();
           $("#uviBadge").addClass('uvi-medium');
-          $("#uviBadge").removeClass('uvi-good');
-          $("#uviBadge").removeClass('uvi-bad');
+          // $("#uviBadge").removeClass('uvi-good');
+          // $("#uviBadge").removeClass('uvi-bad');
         }
       });
     });
