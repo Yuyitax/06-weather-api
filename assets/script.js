@@ -45,10 +45,21 @@ var weather = {
     console.log(data)
 
     var uvi = data.current.uvi;
-    document.querySelector(".uvi").innerText = "UV Index: " + uvi;
+    var uviBadge = document.querySelector('#uviBadge');
+    document.querySelector(".uvi").innerHTML = "UV Index: " + uviBadge + uvi;
       // this.weekForecast(data)
       // this.displayUVI(data)
-    });
+
+       // Setting UV coloring
+       console.log(uvi)
+        if (uvi <= 3) { 
+          uviBadge.classList.add('uvi-good');
+        } else if (uvi <= 7) {
+          uviBadge.classList.add('uvi-medium');
+        } else {
+          uviBadge.classList.add('uvi-bad');
+        }
+      });
     });
 
   },
