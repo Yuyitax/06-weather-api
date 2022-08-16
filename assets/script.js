@@ -30,24 +30,27 @@ var weather = {
       + APIKey,
     )
     .then((response) => response.json())
-    .then((data) => this.displayWeather(data));
+    .then((data) => {
+      this.displayWeather(data)
 
-  },
-
-  fetchUVI: function(data) {
-    fetch("https://api.openweathermap.org/data/2.5/onecall?lat="
+      fetch("https://api.openweathermap.org/data/2.5/onecall?lat="
       + data.coord.lat
       + "&lon=" 
       + data.coord.lon
       + "&units=imperial&appid="
-      + this.APIKey
+      + APIKey
     )
     .then((response) => response.json())
     .then((data) => {
-      this.weekForecast(data)
-      this.displayUVI(data)
-      console.log(fetchUVI)
+    console.log(data)
+
+    var uvi = data.current.uvi;
+    document.querySelector(".uvi").innerText = "UV Index: " + uvi;
+      // this.weekForecast(data)
+      // this.displayUVI(data)
     });
+    });
+
   },
 
 
@@ -64,17 +67,13 @@ var weather = {
     document.querySelector(".temp").innerText = "Temperature: " + temp + "ºF";
     document.querySelector(".humidity").innerText = "Humidity: " + humidity + "%";
     document.querySelector(".wind").innerText = "Wind Speed: " + speed + "mph";
-    console.log(data)
+
   },
 
   search: function() {
     this.fetchWeather(document.querySelector('#search-box').value)
   },
 
-  displayUVI: function (data) {
-    var { uvi } = data.daily[0];
-    document.getElementById("uvi").innerText = "UV Index: " + uvi;
-  },
 
   weekForecast: function (data) {
     const{icon} = data.daily[i].weather[0].icon;
@@ -102,6 +101,9 @@ document.querySelector("#search-box").addEventListener("keyup", function(event) 
     weather.search();
   }
 });
+
+
+
 
 
 

@@ -174,3 +174,15 @@ h3 {
   .btn-history:hover {
     box-shadow: 4px 3px 8px var(--darkbluetrans);
   }
+
+  .uvi-good {
+    background-color: greenyellow;
+    color: black;
+  }
+  .uvi-medium {
+    background-color: yellow;
+    color: black;
+  }
+  .uvi-bad {
+    background-color: rgb(253, 62, 62);
+  }
