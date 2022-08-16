@@ -42,22 +42,22 @@ var weather = {
     )
     .then((response) => response.json())
     .then((data) => {
-    console.log(data)
+    // console.log(data)
 
     var uvi = data.current.uvi;
-    var uviBadge = document.querySelector('#uviBadge');
-    document.querySelector(".uvi").innerHTML = "UV Index: " + uviBadge + uvi;
+    var uviBadge = document.querySelector("#uviBadge");
+    document.querySelector("#uviBadge").innerText = " " + uvi;
       // this.weekForecast(data)
       // this.displayUVI(data)
 
        // Setting UV coloring
        console.log(uvi)
-        if (uvi <= 3) { 
-          uviBadge.classList.add('uvi-good');
-        } else if (uvi <= 7) {
-          uviBadge.classList.add('uvi-medium');
+        if (uvi <= 3.9) { 
+          $("#uviBadge").addClass('uvi-good');
+        } else if (uvi > 7) {
+          $("#uviBadge").addClass('uvi-bad');
         } else {
-          uviBadge.classList.add('uvi-bad');
+          $("#uviBadge").addClass('uvi-medium');
         }
       });
     });
