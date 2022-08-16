@@ -54,10 +54,16 @@ var weather = {
        console.log(uvi)
         if (uvi <= 3.9) { 
           $("#uviBadge").addClass('uvi-good');
+          $("#uviBadge").removeClass('uvi-medium');
+          $("#uviBadge").removeClass('uvi-bad');
         } else if (uvi > 7) {
           $("#uviBadge").addClass('uvi-bad');
+          $("#uviBadge").removeClass('uvi-good');
+          $("#uviBadge").removeClass('uvi-medium');
         } else {
           $("#uviBadge").addClass('uvi-medium');
+          $("#uviBadge").removeClass('uvi-good');
+          $("#uviBadge").removeClass('uvi-bad');
         }
       });
     });
@@ -118,39 +124,44 @@ document.querySelector("#search-box").addEventListener("keyup", function(event) 
 
 
 
-
-
-
 // Time zone plugin
 dayjs.extend(window.dayjs_plugin_utc);
 
 dayjs.extend(window.dayjs_plugin_timezone);
 
-//Current Time and Date
-// var currentTime = function () {
-//   document.getElementById('currentTime').innerText = moment().format(
-//     "dddd, MMM Do, h:mm:ss a"
-//   );
-// };
-// setInterval(currentTime, 1000);
 
 
 
-// Saving to localStorage
-const storageSearch = document.querySelector('#search-box');
-const saveBtn = document.querySelector('#search-btn');
-const btnHistory = document.querySelector('.btn-history');
 
-storageSearch.addEventListener('input', text => {
-  btnHistory.innerText = text.target.value
-})
 
-const saveToStorage = () => {
-  localStorage.setItem('city', btnHistory.innerText)
-}
 
-saveBtn.addEventListener('click', saveToStorage)
-storageSearch.addEventListener('event.key == "Enter"', saveToStorage)
+
+// Saving searched city to local Storage
+var searchCity = $('#search-btn');
+searchCity.on('click', function(event){
+  event.preventDefault()
+  var city = $(this).siblings('input').val()
+  // console.log(text, time)
+  localStorage.setItem("city", city);
+  }) 
+
+
+// const storageSearch = document.querySelector('#search-box');
+// const saveBtn = document.querySelector('#search-btn');
+// const btnHistory = document.querySelector('.btn-history');
+
+// storageSearch.addEventListener('input', text => {
+//   btnHistory.innerText = text.target.value
+// })
+
+// const saveToStorage = () => {
+//   localStorage.setItem('city', btnHistory.innerText)
+// }
+
+// saveBtn.addEventListener('click', saveToStorage)
+// storageSearch.addEventListener('event.key == "Enter"', saveToStorage)
+
+
 
 
 // Display search history function
@@ -168,7 +179,9 @@ function displaySearchList() {
 }
 
 
-// Function to update search history in local storage -- call on displaySearchList()
+
+
+
 
 
 // function renderCurrentWeather(city, weather, timezone) {
