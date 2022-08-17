@@ -134,7 +134,7 @@ h3 {
     border-radius: 8px;
   }
 
-  #week-forecast {
+  .week-forecast {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -152,6 +152,10 @@ h3 {
     padding: 10px;
     border-radius: 8px;
     border: 2px solid var(--darkblue);
+    font-size: 17px;
+    line-height: 1.5em;
+    font-family: Roboto;
+    font-weight: 300;
   }
 
   .daily-card p {
