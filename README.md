@@ -2,7 +2,7 @@
 
 ## URL to launch website
 
-**Please use the following link to view the website: [Weather Dashboard](https://yuyitax.github.io/06-weather-api/)
+**Please use the following link to view the website: [Weather Dashboard](https://yuyitax.github.io/06-weather-dashboard/)
 
 -------------
 
