@@ -2,7 +2,7 @@
 var weatherUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&appid=";
 var APIKey = "e2f2ae4e3190eced8e68a78474ffc272";
 var fullUrl =  weatherUrl + APIKey;
-var returnedWeather = [];
+var searchedHistory = [];
 
 // Curl calls:
 //Full URL for working UVI: https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=-94.04&units=imperial&appid=e2f2ae4e3190eced8e68a78474ffc272
@@ -51,13 +51,9 @@ function renderForecastCard(forecast, timezone) {
   cardBody.append(cardTitle, weatherIcon, tempEl, windEl, humidityEl);
 
   col.setAttribute('class', 'week-forecast');
-  col.classList.add('week-forecast'); //col.classList.add('five-day-card');
+  col.classList.add('week-forecast');
   card.setAttribute('class', 'daily-card');
-  cardBody.setAttribute('class', 'card-body p-2');
-  cardTitle.setAttribute('class', 'card-title');
-  tempEl.setAttribute('class', 'card-text');
-  windEl.setAttribute('class', 'card-text');
-  humidityEl.setAttribute('class', 'card-text');
+
 
   cardTitle.textContent = dayjs.unix(unixTs).tz(timezone).format('M/D/YYYY');
   weatherIcon.setAttribute('src', iconUrl);
@@ -72,6 +68,7 @@ function renderForecastCard(forecast, timezone) {
 
 
 function renderForecast(dailyForecast, timezone) {
+
   // Create unix timestamps for start and end of 5 day forecast
   var startDt = dayjs().tz(timezone).add(1, 'day').startOf('day').unix();
   var endDt = dayjs().tz(timezone).add(6, 'day').startOf('day').unix();
@@ -82,13 +79,8 @@ function renderForecast(dailyForecast, timezone) {
   heading.textContent = '5-Day Forecast:';
   headingCol.append(heading);
 
-  // forecastContainer.innerHTML = '';
-  // forecastContainer.append(headingCol);
   for (var i = 1; i < 6; i++) {
-    // The api returns forecast data which may include 12pm on the same day and
-    // always includes the next 7 days. The api documentation does not provide
-    // information on the behavior for including the same day. Results may have
-    // 7 or 8 items.
+   
     if (dailyForecast[i].dt >= startDt && dailyForecast[i].dt < endDt) {
       renderForecastCard(dailyForecast[i], timezone);
     }
@@ -96,9 +88,7 @@ function renderForecast(dailyForecast, timezone) {
 };
 
 
-
-
-// This is reading the input value and calls the API
+// Fetching both URLs
 var weather = {
   fetchWeather: function(city) {
     fetch(
@@ -124,14 +114,10 @@ var weather = {
 
     // renderForecastCard(data.current, data.dt);
     renderForecast(data.daily, data.dt)
-   
-
-
 
     var uvi = data.current.uvi;
     var uviBadge = document.querySelector("#uviBadge");
     document.querySelector("#uviBadge").innerText = " " + uvi;
-   
 
 
        // Setting UV coloring
@@ -169,14 +155,10 @@ var weather = {
   },
 
 
-
 // Activates the fetchWeather function
   search: function() {
     this.fetchWeather(document.querySelector('#search-box').value)
   },
-
-
-
 };
 
 
@@ -198,76 +180,26 @@ document.querySelector("#search-box").addEventListener("keyup", function(event) 
 
 
 
-
-
-// Saving searched city to local Storage
-document.getElementById('search-btn')
-.addEventListener('click', function (event) {
+// Saving searched city to local Storage and adding to history list as btns
+$("#search-btn").on("click", function(event) {
   event.preventDefault();
-  
-  var city = document.getElementById('search-box').val;
-  localStorage.setItem("city", city);
-  });
 
+  var city = $("#search-box").val().trim();
+    if (!searchedHistory.includes(city)) {
+      searchedHistory.push(city);
 
+        var searchedCityBtn = $(`
+        <button class="btn-history">${city}</button>
+        `);
 
-// Saving to localStorage
-// const searchInput = $('#search-box'); //id for input box
-// const saveBtn = $('#search-btn'); // id for search btn
-// const btnHistory = $('.btn-history'); // This is the class for each new btn 
-// const historyArea = $('search-history'); //this is the area where the list of btns need to show
+        $("#search-history").append(searchedCityBtn); 
+       
+    };
+    searchedCityBtn.on("click", function() {
+      weather.search();
+      
+    });  
 
-// var searchedHistory = [];
-// function saveToStorage() {
-
-//   var searchedCity = document.querySelector('#search-box').text;
-  
-//   if(localStorage.getItem('data') == null){
-//     localStorage.setItem('data', '[]');
-//   }
-//   var savedCity = JSON.parse(localStorage.getItem('data'));
-//   savedCity.push(searchedCity)
-
-//   localStorage.setItem('data', JSON.stringify(savedCity));
-
-// }
-
-// searchInput.addEventListener('input', text => {
-//     btnHistory.innerText = text.target.value
-//   })
-
-// const saveToStorage = () => {
-//   localStorage.setItem('city', btnHistory.innerText)
-// }
-
-// saveBtn.addEventListener('click', saveToStorage)
-// storageSearch.addEventListener('event.key == "Enter"', saveToStorage)
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Display search history function
-function displaySearchList() {
-    historyList.innerHTML = "";
-    for (var i = searchHistory.length -1; i >= 0; i--) {
-        var btn = document.createElement('button');
-        btn.setAttribute('type', 'button');
-        btn.setAttribute('aria-controls', 'Todays Forecast');
-        btn.classList.add('history-btn', 'btn-history');
-        btn.setAttribute('data-search', searchHistory[i]);
-        btn.textContent = searchHistory[i];
-        historyList.append(btn);
-    }
-}
-
-
-
+    localStorage.setItem("city", JSON.stringify(searchedHistory));
+});
+ 
